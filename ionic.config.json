@@ -1,0 +1,7 @@
+{
+  "name": "ZeCatalog",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
