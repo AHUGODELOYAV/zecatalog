@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-zecatalog-dev-182619-authRole",
+      "UnauthRoleArn": "arn:aws:iam::291735288350:role/amplify-zecatalog-dev-182619-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::291735288350:role/amplify-zecatalog-dev-182619-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-zecatalog-dev-182619-deployment",
+      "UnauthRoleName": "amplify-zecatalog-dev-182619-unauthRole",
+      "StackName": "amplify-zecatalog-dev-182619",
+      "StackId": "arn:aws:cloudformation:us-east-1:291735288350:stack/amplify-zecatalog-dev-182619/2c3590c0-15b3-11ec-8604-1280a7430abd",
+      "AmplifyAppId": "d1g0rr7d7948ef"
+    }
+  }
+}

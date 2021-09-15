@@ -4,12 +4,21 @@
   "private": true,
   "dependencies": {
     "@capacitor/app": "1.0.3",
-    "@capacitor/core": "3.2.2",
+    "@capacitor/camera": "^1.0.5",
+    "@capacitor/core": "^3.2.2",
+    "@capacitor/filesystem": "^1.0.3",
     "@capacitor/haptics": "1.0.3",
     "@capacitor/keyboard": "1.0.3",
     "@capacitor/status-bar": "1.0.3",
+    "@capacitor/storage": "^1.1.0",
+    "@ionic-native/camera": "^5.36.0",
+    "@ionic-native/camera-preview": "^5.36.0",
+    "@ionic-native/core": "^5.36.0",
+    "@ionic/pwa-elements": "^3.0.2",
     "@ionic/react": "^5.5.0",
+    "@ionic/react-hooks": "0.0.8",
     "@ionic/react-router": "^5.5.0",
+    "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
@@ -17,11 +26,16 @@
     "@types/node": "^12.19.15",
     "@types/react": "^16.14.3",
     "@types/react-dom": "^16.9.10",
+    "@types/react-redux": "^7.1.18",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "aws-amplify": "^4.2.9",
+    "cordova-plugin-camera": "^6.0.0",
+    "cordova-plugin-camera-preview": "^0.12.3",
     "ionicons": "^5.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.5",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
@@ -65,7 +79,7 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "3.2.2"
+    "@capacitor/cli": "^3.2.2"
   },
   "description": "An Ionic project"
 }

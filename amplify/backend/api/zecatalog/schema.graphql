@@ -1,0 +1,20 @@
+type UserProfile @model
+  @key(fields: ["email"]) {
+  email: String!
+  name: String!
+  lastName: String!
+}
+
+type Product @model @key(fields: ["sku"]) {
+  sku: String!
+  name: String!
+  price: Float!
+  brand: String
+}
+
+type ProductLog @model @key(name: "byProductSKU", fields: ["productSKU", "createdAt"]) {
+  id: ID!
+  productSKU: String!
+  product: Product @connection(fields: ["productSKU"])
+  createdAt: AWSDateTime!
+}
