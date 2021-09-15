@@ -10,6 +10,27 @@
       "StackName": "amplify-zecatalog-dev-182619",
       "StackId": "arn:aws:cloudformation:us-east-1:291735288350:stack/amplify-zecatalog-dev-182619/2c3590c0-15b3-11ec-8604-1280a7430abd",
       "AmplifyAppId": "d1g0rr7d7948ef"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1g0rr7d7948ef",
+          "type": "cicd"
+        }
+      },
+      "function": {
+        "zecatalogauthCustomMessage": {
+          "REDIRECTURL": "https://master.d1g0rr7d7948ef.amplifyapp.com/signin",
+          "EMAILSUBJECT": "[ZeCatalog] - Account Confirmation",
+          "EMAILMESSAGE": "To confirm your email address, please click on the following link:"
+        },
+        "zecatalogauthPostConfirmation": {
+          "GROUP": "admin"
+        }
+      },
+      "auth": {
+        "zecatalogauth": {}
+      }
     }
   }
 }

@@ -1,0 +1,19 @@
+.field-style{
+    border:1px solid grey;
+    border-radius:7px;
+}
+
+.error-field-style{
+    border:1px solid var(--ion-color-danger);
+    border-radius:7px;
+}
+
+.fields-style ion-input{
+    --placeholder-color: var(--ion-color-dark);
+    --placeholder-opacity: .4;
+}
+
+.error-labels{
+    vertical-align: middle;
+  }
+
