@@ -20,13 +20,19 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
+/* Pages */
 import SignUpPage from './pages/auth/SignUpPage';
+import HomePage from './pages/home/HomePage';
+import AdminsPage from './pages/admins/AdminsPage';
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
         <Route exact path="/signup" component={SignUpPage}/>
+        <Route exact path="/home" component={HomePage}/>
+        <Route exact path="/admins" component={AdminsPage}/>
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FlagState {
   isAuthed: boolean;
+  adminsPage: boolean;
   wasCreated: boolean;
   wasDeleted: boolean;
   wasUpdated: boolean;
@@ -11,6 +12,7 @@ export interface FlagState {
 
 const initialState: FlagState = {
   isAuthed: false,
+  adminsPage: false,
   wasCreated: false,
   wasDeleted: false,
   wasUpdated: false,
@@ -24,6 +26,9 @@ const flag = createSlice({
   reducers: {
     setIsAuthed(state, { payload }: PayloadAction<boolean>) {
       state.isAuthed = payload;
+    },
+    setIsAdminsPage(state, { payload }: PayloadAction<boolean>) {
+      state.adminsPage = payload;
     },
     setWasCreated(state, { payload }: PayloadAction<boolean>) {
       state.wasCreated = payload;
@@ -68,6 +73,7 @@ const flag = createSlice({
 
 export const {
   setIsAuthed,
+  setIsAdminsPage,
   setWasCreated,
   setWasDeleted,
   setWasUpdated,

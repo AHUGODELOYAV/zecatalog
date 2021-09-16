@@ -1,21 +1,21 @@
 import React from "react";
 import { IonButton, IonIcon, IonLabel } from "@ionic/react";
-import { personCircleOutline } from "ionicons/icons";
+import { homeOutline } from "ionicons/icons";
 import { useHistory } from "react-router";
 
-const SignInButton: React.FC = () => {
+const HomeButton: React.FC = () => {
   const history = useHistory();
   return (
     <IonButton color="secondary">
-      <IonIcon icon={personCircleOutline} />
+      <IonIcon icon={homeOutline} />
       <IonLabel
         className="ion-margin-start"
-        onClick={() => history.push("/signin")}
+        onClick={() => history.push("/")}
       >
-        Sign In
+        Admins
       </IonLabel>
     </IonButton>
   );
 };
 
-export default SignInButton;
+export default HomeButton;

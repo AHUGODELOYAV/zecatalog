@@ -2,18 +2,20 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateUserProfileInput = {
-  email: string,
+export type CreateProductInput = {
+  sku: string,
   name: string,
-  lastName: string,
+  price: number,
+  brand: string,
 };
 
-export type ModelUserProfileConditionInput = {
+export type ModelProductConditionInput = {
   name?: ModelStringInput | null,
-  lastName?: ModelStringInput | null,
-  and?: Array< ModelUserProfileConditionInput | null > | null,
-  or?: Array< ModelUserProfileConditionInput | null > | null,
-  not?: ModelUserProfileConditionInput | null,
+  price?: ModelFloatInput | null,
+  brand?: ModelStringInput | null,
+  and?: Array< ModelProductConditionInput | null > | null,
+  or?: Array< ModelProductConditionInput | null > | null,
+  not?: ModelProductConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -54,32 +56,6 @@ export type ModelSizeInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
-};
-
-export type UpdateUserProfileInput = {
-  email: string,
-  name?: string | null,
-  lastName?: string | null,
-};
-
-export type DeleteUserProfileInput = {
-  email: string,
-};
-
-export type CreateProductInput = {
-  sku: string,
-  name: string,
-  price: number,
-  brand?: string | null,
-};
-
-export type ModelProductConditionInput = {
-  name?: ModelStringInput | null,
-  price?: ModelFloatInput | null,
-  brand?: ModelStringInput | null,
-  and?: Array< ModelProductConditionInput | null > | null,
-  or?: Array< ModelProductConditionInput | null > | null,
-  not?: ModelProductConditionInput | null,
 };
 
 export type ModelFloatInput = {
@@ -129,21 +105,6 @@ export type DeleteProductLogInput = {
   id?: string | null,
 };
 
-export type ModelUserProfileFilterInput = {
-  email?: ModelStringInput | null,
-  name?: ModelStringInput | null,
-  lastName?: ModelStringInput | null,
-  and?: Array< ModelUserProfileFilterInput | null > | null,
-  or?: Array< ModelUserProfileFilterInput | null > | null,
-  not?: ModelUserProfileFilterInput | null,
-};
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
 export type ModelProductFilterInput = {
   sku?: ModelStringInput | null,
   name?: ModelStringInput | null,
@@ -153,6 +114,12 @@ export type ModelProductFilterInput = {
   or?: Array< ModelProductFilterInput | null > | null,
   not?: ModelProductFilterInput | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelProductLogFilterInput = {
   id?: ModelIDInput | null,
@@ -179,54 +146,6 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type CreateUserProfileMutationVariables = {
-  input: CreateUserProfileInput,
-  condition?: ModelUserProfileConditionInput | null,
-};
-
-export type CreateUserProfileMutation = {
-  createUserProfile:  {
-    __typename: "UserProfile",
-    email: string,
-    name: string,
-    lastName: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateUserProfileMutationVariables = {
-  input: UpdateUserProfileInput,
-  condition?: ModelUserProfileConditionInput | null,
-};
-
-export type UpdateUserProfileMutation = {
-  updateUserProfile:  {
-    __typename: "UserProfile",
-    email: string,
-    name: string,
-    lastName: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteUserProfileMutationVariables = {
-  input: DeleteUserProfileInput,
-  condition?: ModelUserProfileConditionInput | null,
-};
-
-export type DeleteUserProfileMutation = {
-  deleteUserProfile:  {
-    __typename: "UserProfile",
-    email: string,
-    name: string,
-    lastName: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type CreateProductMutationVariables = {
   input: CreateProductInput,
   condition?: ModelProductConditionInput | null,
@@ -238,7 +157,7 @@ export type CreateProductMutation = {
     sku: string,
     name: string,
     price: number,
-    brand: string | null,
+    brand: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -255,7 +174,7 @@ export type UpdateProductMutation = {
     sku: string,
     name: string,
     price: number,
-    brand: string | null,
+    brand: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -272,7 +191,7 @@ export type DeleteProductMutation = {
     sku: string,
     name: string,
     price: number,
-    brand: string | null,
+    brand: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -293,7 +212,7 @@ export type CreateProductLogMutation = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -317,7 +236,7 @@ export type UpdateProductLogMutation = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -341,50 +260,12 @@ export type DeleteProductLogMutation = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null,
     createdAt: string,
     updatedAt: string,
-  } | null,
-};
-
-export type GetUserProfileQueryVariables = {
-  email: string,
-};
-
-export type GetUserProfileQuery = {
-  getUserProfile:  {
-    __typename: "UserProfile",
-    email: string,
-    name: string,
-    lastName: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListUserProfilesQueryVariables = {
-  email?: string | null,
-  filter?: ModelUserProfileFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListUserProfilesQuery = {
-  listUserProfiles:  {
-    __typename: "ModelUserProfileConnection",
-    items:  Array< {
-      __typename: "UserProfile",
-      email: string,
-      name: string,
-      lastName: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    nextToken: string | null,
   } | null,
 };
 
@@ -398,7 +279,7 @@ export type GetProductQuery = {
     sku: string,
     name: string,
     price: number,
-    brand: string | null,
+    brand: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -420,7 +301,7 @@ export type ListProductsQuery = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -442,7 +323,7 @@ export type GetProductLogQuery = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -469,7 +350,7 @@ export type ListProductLogsQuery = {
         sku: string,
         name: string,
         price: number,
-        brand: string | null,
+        brand: string,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -480,46 +361,13 @@ export type ListProductLogsQuery = {
   } | null,
 };
 
-export type OnCreateUserProfileSubscription = {
-  onCreateUserProfile:  {
-    __typename: "UserProfile",
-    email: string,
-    name: string,
-    lastName: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateUserProfileSubscription = {
-  onUpdateUserProfile:  {
-    __typename: "UserProfile",
-    email: string,
-    name: string,
-    lastName: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteUserProfileSubscription = {
-  onDeleteUserProfile:  {
-    __typename: "UserProfile",
-    email: string,
-    name: string,
-    lastName: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
 export type OnCreateProductSubscription = {
   onCreateProduct:  {
     __typename: "Product",
     sku: string,
     name: string,
     price: number,
-    brand: string | null,
+    brand: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -531,7 +379,7 @@ export type OnUpdateProductSubscription = {
     sku: string,
     name: string,
     price: number,
-    brand: string | null,
+    brand: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -543,7 +391,7 @@ export type OnDeleteProductSubscription = {
     sku: string,
     name: string,
     price: number,
-    brand: string | null,
+    brand: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -559,7 +407,7 @@ export type OnCreateProductLogSubscription = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -578,7 +426,7 @@ export type OnUpdateProductLogSubscription = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -597,7 +445,7 @@ export type OnDeleteProductLogSubscription = {
       sku: string,
       name: string,
       price: number,
-      brand: string | null,
+      brand: string,
       createdAt: string,
       updatedAt: string,
     } | null,
