@@ -17,7 +17,7 @@ import {
 import { listProducts } from "../graphql/queries";
 
 export interface ProductState {
-  product: ProductObject[];
+  products: ProductObject[];
   actualProduct: ProductObject;
 }
 
@@ -29,7 +29,7 @@ export interface ProductObject {
 }
 
 const initialState: ProductState = {
-  product: [],
+  products: [],
   actualProduct: {
     sku: "",
     name: "",
@@ -43,13 +43,13 @@ const product = createSlice({
   initialState,
   reducers: {
     setProducts(state, { payload }: PayloadAction<ProductObject[]>) {
-      state.product = payload;
+      state.products = payload;
     },
     setActualProduct(state, { payload }: PayloadAction<ProductObject>) {
       state.actualProduct = payload;
     },
     cleanProduct(state) {
-      state.product = [];
+      state.products = [];
     },
   },
 });
