@@ -9,10 +9,17 @@ import {
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { flagSelector } from "../../store/FlagSlice";
-import { postProduct } from "../../store/ProductSlice";
+import {
+  editProduct,
+  productSelector,
+  removeProduct,
+} from "../../store/ProductSlice";
 import { fieldValidations } from "../../validations/FieldValidations";
+import DeleteProductAlert from "../alerts/DeleteProductAlert";
 import ErrorAlert from "../alerts/ErrorAlert";
 import SignUpAlert from "../alerts/SignUpAlert";
+import UpdateProductAlert from "../alerts/UpdateProductAlert";
+import WarningAlert from "../alerts/WarningAlert";
 import { TextFieldTypes } from "../global/field/Field";
 import FormTitle from "../global/general/FormTitle";
 import Loading from "../global/general/Loading";
@@ -24,12 +31,13 @@ const ProductsEditContent: React.FC = () => {
   const { loading } = useSelector(flagSelector);
   const [toastMessage, setToastMessage] = useState("");
   const dispatch = useDispatch();
-  
+  const { actualProduct } = useSelector(productSelector);
+  const [deleteProduct, setDeleteProduct] = useState(false);
 
   const fieldSku = {
     label: "SKU",
     type: "text" as TextFieldTypes,
-    value: useState(""),
+    value: useState(actualProduct.sku),
     placeholder: "1234",
     error: useState(false),
     errorMessage: useState(""),
@@ -40,7 +48,7 @@ const ProductsEditContent: React.FC = () => {
   const fieldName = {
     label: "Name",
     type: "text" as TextFieldTypes,
-    value: useState(""),
+    value: useState(actualProduct.name),
     placeholder: "Mattress",
     error: useState(false),
     errorMessage: useState(""),
@@ -51,7 +59,7 @@ const ProductsEditContent: React.FC = () => {
   const fieldPrice = {
     label: "Price",
     type: "number" as TextFieldTypes,
-    value: useState(""),
+    value: useState(actualProduct.price),
     placeholder: "100",
     error: useState(false),
     errorMessage: useState(""),
@@ -62,7 +70,7 @@ const ProductsEditContent: React.FC = () => {
   const fieldBrand = {
     label: "Brand",
     type: "text" as TextFieldTypes,
-    value: useState(""),
+    value: useState(actualProduct.brand),
     placeholder: "Luuna",
     error: useState(false),
     errorMessage: useState(""),
@@ -79,7 +87,7 @@ const ProductsEditContent: React.FC = () => {
     ];
     if (!fieldValidation.includes(true)) {
       dispatch(
-        postProduct({
+        editProduct({
           sku: fieldSku.value[0].toString(),
           name: fieldName.value[0].toString(),
           price: fieldPrice.value[0].toString(),
@@ -91,12 +99,30 @@ const ProductsEditContent: React.FC = () => {
     }
   };
 
+  const deleteHandler = () => {
+    setDeleteProduct(true);
+  };
+  const acceptHandler = () => {
+    setDeleteProduct(false);
+    dispatch(removeProduct({ sku: fieldSku.value[0].toString() }));
+  };
+  const cancelHandler = () => {
+    setDeleteProduct(false);
+  };
   return (
     <IonPage>
       <Loading show={loading} />
       <Toast toastMessage={[toastMessage, setToastMessage]} />
+      <WarningAlert
+        show={[deleteProduct, setDeleteProduct]}
+        action="delete"
+        name={"SKU: " + fieldSku.value[0]}
+        accept={acceptHandler}
+        cancel={cancelHandler}
+      />
+      <DeleteProductAlert />
       <ErrorAlert />
-      <SignUpAlert />
+      <UpdateProductAlert />
       <IonHeader>
         <Toolbar />
       </IonHeader>
@@ -110,7 +136,9 @@ const ProductsEditContent: React.FC = () => {
                 fieldName={fieldName}
                 fieldPrice={fieldPrice}
                 fieldBrand={fieldBrand}
+                isEdit={true}
                 saveHandler={saveHandler}
+                deleteHandler={deleteHandler}
               />
             </IonCol>
           </IonRow>

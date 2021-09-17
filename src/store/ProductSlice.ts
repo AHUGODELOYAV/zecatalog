@@ -1,3 +1,4 @@
+import { createProductLog } from "./../graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProductThunk } from "../index";
@@ -24,7 +25,7 @@ export interface ProductState {
 export interface ProductObject {
   sku: string;
   name: string;
-  price: number;
+  price: string;
   brand: string;
 }
 
@@ -33,7 +34,7 @@ const initialState: ProductState = {
   actualProduct: {
     sku: "",
     name: "",
-    price: 0.0,
+    price: "",
     brand: "",
   },
 };
@@ -111,6 +112,21 @@ export const removeProduct = (input: any): ProductThunk => {
       await API.graphql(graphqlOperation(deleteProduct, { input }));
       dispatch(setLoading(false));
       dispatch(setWasDeleted(true));
+    } catch (error) {
+      console.log(error);
+      dispatch(setLoading(false));
+      dispatch(setErrorMessage(String(error)));
+      dispatch(setError(true));
+    }
+  };
+};
+
+export const postProductLog = (input: any): ProductThunk => {
+  return async (dispatch: any) => {
+    try {
+      dispatch(setLoading(true));
+      await API.graphql(graphqlOperation(createProductLog, { input }));
+      dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false));
       dispatch(setErrorMessage(String(error)));

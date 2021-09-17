@@ -10,18 +10,18 @@ import {
   IonRow,
   IonSearchbar,
 } from "@ionic/react";
-import {
-    addOutline,
-} from "ionicons/icons";
+import { addOutline } from "ionicons/icons";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { authSelector } from "../../store/AuthSlice";
 import { productSelector } from "../../store/ProductSlice";
 import Toolbar from "../global/general/Toolbar";
 import ProductsCard from "../products/ProductsCard";
 
 const HomeContent: React.FC = () => {
-  const {products} = useSelector(productSelector)
+  const { products } = useSelector(productSelector);
   const [searchText, setSearchText] = useState("");
+  const { isAuthed } = useSelector(authSelector);
 
   return (
     <IonPage>
@@ -30,7 +30,7 @@ const HomeContent: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonGrid fixed>
-        <IonRow>
+          <IonRow>
             <IonCol>
               <IonSearchbar
                 value={searchText}
@@ -44,22 +44,21 @@ const HomeContent: React.FC = () => {
             <IonCol>
               {products
                 .filter((product) =>
-                  product.name
-                    .toLowerCase()
-                    .includes(searchText.toLowerCase())
+                  product.name.toLowerCase().includes(searchText.toLowerCase())
                 )
                 .map((product) => (
-                  <ProductsCard
-                    key={product.sku}
-                    product={product}
-                  />
+                  <ProductsCard key={product.sku} product={product} />
                 ))}
             </IonCol>
           </IonRow>
         </IonGrid>
-        <IonFab vertical="bottom" horizontal="end" slot="fixed">
-      <IonFabButton color="secondary" routerLink="/productedit/0"><IonIcon icon={addOutline} /></IonFabButton>
-    </IonFab>
+        {isAuthed && (
+          <IonFab vertical="bottom" horizontal="end" slot="fixed">
+            <IonFabButton color="secondary" routerLink="/productedit/0">
+              <IonIcon icon={addOutline} />
+            </IonFabButton>
+          </IonFab>
+        )}
       </IonContent>
     </IonPage>
   );

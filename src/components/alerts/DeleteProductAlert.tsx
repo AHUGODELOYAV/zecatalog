@@ -1,26 +1,26 @@
 import React from "react";
 import { IonAlert } from "@ionic/react";
 import { useDispatch, useSelector } from "react-redux";
-import { flagSelector, setWasUpdated } from "../../store/FlagSlice";
+import { flagSelector, setWasDeleted } from "../../store/FlagSlice";
 import { useHistory } from "react-router";
 
-const UpdateProductAlert: React.FC = () => {
+const DeleteProductAlert: React.FC = () => {
   const dispatch = useDispatch();
-  const { wasUpdated } = useSelector(flagSelector);
+  const { wasDeleted } = useSelector(flagSelector);
   const history = useHistory();
 
   return (
     <IonAlert
       mode="ios"
-      isOpen={wasUpdated}
+      isOpen={wasDeleted}
       header={"Success"}
-      message={"Product updated!"}
+      message={"Product deleted!"}
       backdropDismiss={false}
       buttons={[
         {
           text: "Accept",
           handler: () => {
-            dispatch(setWasUpdated(false));
+            dispatch(setWasDeleted(false));
             history.push("/");
           },
         },
@@ -29,4 +29,4 @@ const UpdateProductAlert: React.FC = () => {
   );
 };
 
-export default UpdateProductAlert;
+export default DeleteProductAlert;
