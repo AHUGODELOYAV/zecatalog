@@ -7,7 +7,6 @@ import { getAdmins, resetAdmin } from "../../store/AdminSlice";
 const AdminsPage: React.FC = () => {
   const dispatch = useDispatch();
   useIonViewWillEnter(() => {
-    console.log("WILL ENTER $$$")
     dispatch(resetAdmin());
     dispatch(getAdmins());
   });

@@ -31,6 +31,7 @@ import { useDispatch } from "react-redux";
 import { setIsAuthed, setUserProfile } from "./store/AuthSlice";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
+import ProductsEditPage from "./pages/products/ProductsEditPage";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ const App: React.FC = () => {
           <Route exact path="/forgotpassword" component={ForgotPasswordPage} />
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/admins" component={AdminsPage} />
+          <Route exact path="/productedit/:productID" component={ProductsEditPage} />
+          
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>

@@ -1,44 +1,62 @@
-import { IonButton, IonCard, IonIcon, IonItem, IonLabel, useIonPopover } from "@ionic/react";
-import {
-  cubeOutline,
-  ellipsisHorizontal,
-  ellipsisVertical,
-} from "ionicons/icons";
+import { IonButton, IonCard, IonIcon, IonItem, IonLabel } from "@ionic/react";
+import { createOutline, cubeOutline } from "ionicons/icons";
 import React, { useState } from "react";
-import ProductMenu from "./ProductsMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { authSelector } from "../../store/AuthSlice";
+import { postProductLog, ProductObject, setActualProduct } from "../../store/ProductSlice";
 
-const ProductsCard: React.FC = () => {
-    const [viewMore, setViewMore] = useState(false);
-    const [present, dismiss] = useIonPopover(ProductMenu, { onHide: () => dismiss() });
-
-    const viewMoreHandler = () => {
-        if(viewMore){
-            setViewMore(false)
-        }else{
-            setViewMore(true)
-        }
+const ProductsCard: React.FC<{
+  product: ProductObject;
+}> = (props) => {
+  const [viewMore, setViewMore] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { isAuthed } = useSelector(authSelector);
+  const viewMoreHandler = () => {
+    if (viewMore) {
+      setViewMore(false);
+    } else {
+      dispatch(postProductLog({productSKU:props.product.sku}))
+      setViewMore(true);
     }
+  };
   return (
     <IonCard>
       <IonItem>
         <IonIcon icon={cubeOutline} slot="start" />
-        <IonLabel>Product name </IonLabel>
-        <IonButton fill="outline" slot="end" onClick={viewMoreHandler}>
-          View
-        </IonButton>
-        <IonButton fill="clear" slot="end" onClick={(e) =>
-            present({
-              event: e.nativeEvent,
-            })
-          }>
-          <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical} />
-        </IonButton>
+        <IonLabel>{props.product.name}</IonLabel>
+        {!isAuthed && (
+          <IonButton fill="outline" slot="end" onClick={viewMoreHandler}>
+            View
+          </IonButton>
+        )}
+        {isAuthed && (
+          <IonButton
+            fill="clear"
+            slot="end"
+            onClick={() => {
+              dispatch(setActualProduct(props.product));
+              history.push("/productedit/" + props.product.sku);
+            }}
+          >
+            <IonIcon icon={createOutline} />
+          </IonButton>
+        )}
       </IonItem>
-      {viewMore && <IonItem>
-        <small>
-          <i><strong>SKU:</strong> 123456 <strong>Brand:</strong> Zebrands <strong>Price:</strong> $100</i>
-        </small>
-      </IonItem>}
+      {(viewMore || isAuthed) && (
+        <IonItem>
+          <small>
+            <i>
+              <strong>SKU:</strong>
+              {" " + props.product.sku + " "}
+              <strong>Brand:</strong>
+              {" " + props.product.brand + " "}
+              <strong>Price:</strong> ${props.product.price}
+            </i>
+          </small>
+        </IonItem>
+      )}
     </IonCard>
   );
 };
