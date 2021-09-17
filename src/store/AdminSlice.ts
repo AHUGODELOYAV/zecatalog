@@ -1,7 +1,13 @@
-import { Auth, API } from "aws-amplify";
+import { sendEmailToAdmin } from "./../graphql/mutations";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AdminThunk } from "../index";
-import { setError, setErrorMessage, setLoading, setWasUpdated } from "./FlagSlice";
+import {
+  setError,
+  setErrorMessage,
+  setLoading,
+  setWasUpdated,
+} from "./FlagSlice";
 
 export interface AdminState {
   admins: AdminObject[];
@@ -94,7 +100,7 @@ export const disableAdmin =
         },
       };
       await API.post(apiName, path, myInit);
-      dispatch(setWasUpdated(true))
+      dispatch(setWasUpdated(true));
       dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(setLoading(false));
@@ -122,7 +128,7 @@ export const enableAdmin =
         },
       };
       await API.post(apiName, path, myInit);
-      dispatch(setWasUpdated(true))
+      dispatch(setWasUpdated(true));
       dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(setLoading(false));
@@ -130,3 +136,40 @@ export const enableAdmin =
       dispatch(setError(true));
     }
   };
+
+export const sendNotificationToAdmin = (input: any): AdminThunk => {
+  return async (dispatch: any) => {
+    try {
+      dispatch(setLoading(true));
+      let apiName = "AdminQueries";
+      let path = "/listUsersInGroup";
+      let myInit = {
+        queryStringParameters: {
+          groupname: "Admin",
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${(await Auth.currentSession())
+            .getAccessToken()
+            .getJwtToken()}`,
+        },
+      };
+      const rest = await API.get(apiName, path, myInit);
+      let adminsEmail = "";
+      rest.Users.map((user: any) => {
+        adminsEmail = adminsEmail + user.Attributes[4].Value + ";";
+      });
+      const emailData = {
+        toemail: adminsEmail,
+        subject: input.subject,
+        message: input.message,
+      };
+      await API.graphql(graphqlOperation(sendEmailToAdmin, emailData));
+      dispatch(setLoading(false));
+    } catch (error: any) {
+      dispatch(setLoading(false));
+      dispatch(setErrorMessage(error.errors[0].message));
+      dispatch(setError(true));
+    }
+  };
+};

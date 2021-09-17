@@ -119,7 +119,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-zecatalog-dev-182619-deployment",
-          "S3Key": "amplify-builds/zecatalogauthCustomMessage-77656d42556868306d76-build.zip"
+          "S3Key": "amplify-builds/zecatalogauthCustomMessage-4e433365566d346b3830-build.zip"
         }
       }
     },

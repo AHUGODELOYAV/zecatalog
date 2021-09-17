@@ -27,14 +27,15 @@ import HomePage from "./pages/home/HomePage";
 import AdminsPage from "./pages/admins/AdminsPage";
 import SignInPage from "./pages/auth/SignInPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
-import { useDispatch } from "react-redux";
-import { setIsAuthed, setUserProfile } from "./store/AuthSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { authSelector, setIsAuthed, setUserProfile } from "./store/AuthSlice";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import ProductsEditPage from "./pages/products/ProductsEditPage";
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+  const { isAuthed } = useSelector(authSelector);
 
   useEffect(() => {
     getUser().then(async (userData) => {
@@ -58,13 +59,42 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route exact path="/signup" component={SignUpPage} />
-          <Route exact path="/signin" component={SignInPage} />
-          <Route exact path="/forgotpassword" component={ForgotPasswordPage} />
+          <Route
+            exact
+            path="/signup"
+            render={() => {
+              return isAuthed ? <SignUpPage /> : <Redirect to="/" />;
+            }}
+          />
+          <Route
+            exact
+            path="/admins"
+            render={() => {
+              return isAuthed ? <AdminsPage /> : <Redirect to="/" />;
+            }}
+          />
+          <Route
+            exact
+            path="/productedit/:productID"
+            render={() => {
+              return isAuthed ? <ProductsEditPage /> : <Redirect to="/" />;
+            }}
+          />
+          <Route
+            exact
+            path="/signin"
+            render={() => {
+              return !isAuthed ? <SignInPage /> : <Redirect to="/" />;
+            }}
+          />
+          <Route
+            exact
+            path="/forgotpassword"
+            render={() => {
+              return !isAuthed ? <ForgotPasswordPage /> : <Redirect to="/" />;
+            }}
+          />
           <Route exact path="/home" component={HomePage} />
-          <Route exact path="/admins" component={AdminsPage} />
-          <Route exact path="/productedit/:productID" component={ProductsEditPage} />
-          
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>

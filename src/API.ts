@@ -146,6 +146,16 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type SendEmailToAdminMutationVariables = {
+  toemail?: string | null,
+  subject?: string | null,
+  message?: string | null,
+};
+
+export type SendEmailToAdminMutation = {
+  sendEmailToAdmin: string | null,
+};
+
 export type CreateProductMutationVariables = {
   input: CreateProductInput,
   condition?: ModelProductConditionInput | null,

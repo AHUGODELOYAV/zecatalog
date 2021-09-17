@@ -8,6 +8,8 @@ import {
 } from "@ionic/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { sendNotificationToAdmin } from "../../store/AdminSlice";
+import { authSelector } from "../../store/AuthSlice";
 import { flagSelector } from "../../store/FlagSlice";
 import {
   editProduct,
@@ -33,6 +35,7 @@ const ProductsEditContent: React.FC = () => {
   const dispatch = useDispatch();
   const { actualProduct } = useSelector(productSelector);
   const [deleteProduct, setDeleteProduct] = useState(false);
+  const { userProfile } = useSelector(authSelector);
 
   const fieldSku = {
     label: "SKU",
@@ -94,6 +97,24 @@ const ProductsEditContent: React.FC = () => {
           brand: fieldBrand.value[0].toString(),
         })
       );
+      dispatch(
+        sendNotificationToAdmin({
+          subject: "[ZeCatalog] - Product UPDATED",
+          message:
+            "This product has been changed by " +
+            userProfile.name +
+            " " +
+            userProfile.lastname +
+            ": SKU-" +
+            fieldSku.value[0].toString() +
+            " Name: " +
+            fieldName.value[0].toString() +
+            " Price: " +
+            fieldPrice.value[0].toString() +
+            " Brand: " +
+            fieldBrand.value[0].toString(),
+        })
+      );
     } else {
       setToastMessage("Please review the highlighted fields");
     }
@@ -105,6 +126,24 @@ const ProductsEditContent: React.FC = () => {
   const acceptHandler = () => {
     setDeleteProduct(false);
     dispatch(removeProduct({ sku: fieldSku.value[0].toString() }));
+    dispatch(
+      sendNotificationToAdmin({
+        subject: "[ZeCatalog] - Product DELETED",
+        message:
+          "This product has been deleted by " +
+          userProfile.name +
+          " " +
+          userProfile.lastname +
+          ": SKU-" +
+          fieldSku.value[0].toString() +
+          " Name: " +
+          fieldName.value[0].toString() +
+          " Price: " +
+          fieldPrice.value[0].toString() +
+          " Brand: " +
+          fieldBrand.value[0].toString(),
+      })
+    );
   };
   const cancelHandler = () => {
     setDeleteProduct(false);

@@ -1,5 +1,6 @@
 import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
 import React from "react";
+import { useHistory } from "react-router";
 import Field, { FieldObject } from "../../global/field/Field";
 
 const SignUpForm: React.FC<{
@@ -10,6 +11,7 @@ const SignUpForm: React.FC<{
   fieldPassConfirm: FieldObject;
   signUpHandler: () => void;
 }> = (props) => {
+  const history = useHistory();
   return (
     <IonGrid className="ion-no-padding ion-text-left">
       <IonRow>
@@ -53,6 +55,19 @@ const SignUpForm: React.FC<{
             <IonCol>
               <IonButton expand="block" onClick={props.signUpHandler}>
                 Sign Up
+              </IonButton>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonButton
+                fill="outline"
+                expand="block"
+                onClick={() => {
+                  history.push("/admins");
+                }}
+              >
+                Cancel
               </IonButton>
             </IonCol>
           </IonRow>

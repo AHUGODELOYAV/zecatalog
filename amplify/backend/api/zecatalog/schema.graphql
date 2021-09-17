@@ -15,3 +15,7 @@ type ProductLog
   product: Product @connection(fields: ["productSKU"])
   createdAt: AWSDateTime!
 }
+
+type Mutation {
+  sendEmailToAdmin(toemail: String, subject: String, message: String): String @function(name: "sendEmailToAdmin-${env}")
+}
