@@ -110,7 +110,7 @@ const ProductsCreateContent: React.FC = () => {
                 fieldName={fieldName}
                 fieldPrice={fieldPrice}
                 fieldBrand={fieldBrand}
-                isEdit={true}
+                isEdit={false}
                 saveHandler={saveHandler}
                 deleteHandler={()=>{}}                
               />

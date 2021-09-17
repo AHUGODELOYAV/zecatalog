@@ -2,6 +2,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const sendEmailToAdmin = /* GraphQL */ `
+  mutation SendEmailToAdmin(
+    $toemail: String
+    $subject: String
+    $message: String
+  ) {
+    sendEmailToAdmin(toemail: $toemail, subject: $subject, message: $message)
+  }
+`;
 export const createProduct = /* GraphQL */ `
   mutation CreateProduct(
     $input: CreateProductInput!
