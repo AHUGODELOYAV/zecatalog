@@ -113,7 +113,6 @@ export const removeProduct = (input: any): ProductThunk => {
       dispatch(setLoading(false));
       dispatch(setWasDeleted(true));
     } catch (error) {
-      console.log(error);
       dispatch(setLoading(false));
       dispatch(setErrorMessage(String(error)));
       dispatch(setError(true));

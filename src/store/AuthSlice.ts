@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Auth } from "aws-amplify";
 import { AuthThunk } from "./../index";
 import {
-  setCodeSended,
+  setSentCode,
   setError,
   setErrorMessage,
   setLoading,
@@ -124,7 +124,7 @@ export const forgotPass =
     try {
       dispatch(setLoading(true));
       await Auth.forgotPassword(input);
-      dispatch(setCodeSended(true));
+      dispatch(setSentCode(true));
       dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(setLoading(false));

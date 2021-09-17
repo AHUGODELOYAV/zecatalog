@@ -1,19 +1,19 @@
 import React from "react";
 import { IonButton, IonCol, IonRow } from "@ionic/react";
 import { useDispatch, useSelector } from "react-redux";
-import { flagSelector, setCodeSended } from "../../../store/FlagSlice";
+import { flagSelector, setSentCode } from "../../../store/FlagSlice";
 
 const ResendVerificationCodeButton: React.FC = () => {
   const dispatch = useDispatch();
-  const {codeSended} = useSelector(flagSelector)
+  const { sentCode } = useSelector(flagSelector);
   return (
     <IonRow>
       <IonCol>
-        {codeSended && (
+        {sentCode && (
           <IonButton
             color="secondary"
             fill="clear"
-            onClick={() => dispatch(setCodeSended(false))}
+            onClick={() => dispatch(setSentCode(false))}
           >
             Resend Verification Code
           </IonButton>

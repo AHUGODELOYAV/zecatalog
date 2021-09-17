@@ -14,7 +14,7 @@ const SignUpAlert: React.FC = () => {
       mode="ios"
       isOpen={wasCreated}
       header={"Success"}
-      message={"Admin created. We send an account email verification."}
+      message={"Admin created. We sent an account email verification."}
       backdropDismiss={false}
       buttons={[
         {
