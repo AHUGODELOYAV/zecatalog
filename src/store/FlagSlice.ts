@@ -8,7 +8,7 @@ export interface FlagState {
   loading: boolean;
   error: boolean;
   errorMessage: string;
-  codeSended: boolean;
+  sentCode: boolean;
   passwordChanged: boolean;
 }
 
@@ -20,7 +20,7 @@ const initialState: FlagState = {
   loading: false,
   error: false,
   errorMessage: "",
-  codeSended: false,
+  sentCode: false,
   passwordChanged: false,
 };
 
@@ -49,8 +49,8 @@ const flag = createSlice({
     setErrorMessage(state, { payload }: PayloadAction<string>) {
       state.errorMessage = payload;
     },
-    setCodeSended(state, { payload }: PayloadAction<boolean>) {
-      state.codeSended = payload;
+    setSentCode(state, { payload }: PayloadAction<boolean>) {
+      state.sentCode = payload;
     },
     setPasswordChanged(state, { payload }: PayloadAction<boolean>) {
       state.passwordChanged = payload;
@@ -66,7 +66,7 @@ export const {
   setLoading,
   setError,
   setErrorMessage,
-  setCodeSended,
+  setSentCode,
   setPasswordChanged,
 } = flag.actions;
 

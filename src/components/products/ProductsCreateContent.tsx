@@ -13,7 +13,6 @@ import { postProduct } from "../../store/ProductSlice";
 import { fieldValidations } from "../../validations/FieldValidations";
 import CreateProductAlert from "../alerts/CreateProductAlert";
 import ErrorAlert from "../alerts/ErrorAlert";
-import SignUpAlert from "../alerts/SignUpAlert";
 import { TextFieldTypes } from "../global/field/Field";
 import FormTitle from "../global/general/FormTitle";
 import Loading from "../global/general/Loading";

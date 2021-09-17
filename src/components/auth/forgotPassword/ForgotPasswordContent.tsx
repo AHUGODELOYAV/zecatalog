@@ -5,7 +5,6 @@ import {
   IonHeader,
   IonPage,
   IonRow,
-  IonText,
 } from "@ionic/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +28,7 @@ import SendVerificationCodeForm from "./SendVerificationCodeForm";
 const ForgotPasswordContent: React.FC = () => {
   const [toastMessage, setToastMessage] = useState("");
   const dispatch = useDispatch();
-  const { loading, codeSended } = useSelector(flagSelector);
+  const { loading, sentCode } = useSelector(flagSelector);
 
   const fieldMail = {
     label: "Email",
@@ -137,7 +136,7 @@ const ForgotPasswordContent: React.FC = () => {
               offset-xl="4"
             >
               <FormTitle title="Forgot your password?" />
-              {codeSended ? (
+              {sentCode ? (
                 <ChangePasswordForm
                   fieldVerCode={fieldVerCode}
                   fieldPass={fieldPass}

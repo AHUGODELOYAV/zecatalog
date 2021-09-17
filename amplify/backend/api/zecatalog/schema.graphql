@@ -1,6 +1,4 @@
-type Product
-  @model
-  @key(fields: ["sku"]) {
+type Product @model @key(fields: ["sku"]) {
   sku: String!
   name: String!
   price: Float!
@@ -17,5 +15,6 @@ type ProductLog
 }
 
 type Mutation {
-  sendEmailToAdmin(toemail: String, subject: String, message: String): String @function(name: "sendEmailToAdmin-${env}")
+  sendEmailToAdmin(toemail: String, subject: String, message: String): String
+    @function(name: "sendEmailToAdmin-${env}")
 }

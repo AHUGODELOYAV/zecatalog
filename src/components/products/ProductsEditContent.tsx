@@ -19,7 +19,6 @@ import {
 import { fieldValidations } from "../../validations/FieldValidations";
 import DeleteProductAlert from "../alerts/DeleteProductAlert";
 import ErrorAlert from "../alerts/ErrorAlert";
-import SignUpAlert from "../alerts/SignUpAlert";
 import UpdateProductAlert from "../alerts/UpdateProductAlert";
 import WarningAlert from "../alerts/WarningAlert";
 import { TextFieldTypes } from "../global/field/Field";
