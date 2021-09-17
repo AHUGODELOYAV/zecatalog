@@ -1,11 +1,13 @@
 import React from "react";
 import { IonButton, IonIcon } from "@ionic/react";
 import { exitOutline } from "ionicons/icons";
-import { Auth } from "aws-amplify";
+import { useDispatch } from "react-redux";
+import { signOutAuth } from "../../../store/AuthSlice";
 
 const SignOutButton: React.FC = () => {
+  const dispatch = useDispatch();
   return (
-    <IonButton color="secondary" onClick={() => Auth.signOut()}>
+    <IonButton color="secondary" onClick={() => dispatch(signOutAuth())}>
       <IonIcon slot="icon-only" icon={exitOutline} />
     </IonButton>
   );

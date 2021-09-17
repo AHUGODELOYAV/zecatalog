@@ -15,6 +15,27 @@
           "additionalAuthenticationProviders": []
         }
       }
+    },
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "zecatalogauthresources",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueries41025296",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ]
     }
   },
   "hosting": {
@@ -33,6 +54,30 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "zecatalogauthresourcesCustomMessage": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "zecatalogauthresourcesPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "AdminQueries41025296": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "zecatalogauthresources",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -42,7 +87,7 @@
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "zecatalogauth",
+          "resourceName": "zecatalogauthresources",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -52,13 +97,13 @@
         }
       ]
     },
-    "zecatalogauth": {
+    "zecatalogauthresources": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "zecatalogauthCustomMessage",
+          "resourceName": "zecatalogauthresourcesCustomMessage",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -67,7 +112,7 @@
         },
         {
           "category": "function",
-          "resourceName": "zecatalogauthPostConfirmation",
+          "resourceName": "zecatalogauthresourcesPostConfirmation",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",

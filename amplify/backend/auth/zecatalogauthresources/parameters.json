@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "zecatalogidentitypool",
+    "identityPoolName": "zecatalogauthidentitypool",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "zecata453c35ee",
-    "userPoolName": "zecataloguserpool",
+    "resourceNameTruncated": "zecatabfb6e821",
+    "userPoolName": "zecatalogauthuserpool",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -12,13 +12,15 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
+    "emailVerificationSubject": "[ZeCatalog] - Account verification",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": true,
     "passwordPolicyMinLength": "6",
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email"
+        "email",
+        "family_name",
+        "name"
     ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": "360",
@@ -28,10 +30,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "zecata453c35ee_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "zecatabfb6e821_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "453c35ee",
-    "resourceName": "zecatalogauth",
+    "sharedId": "bfb6e821",
+    "resourceName": "zecatalogauthresources",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -55,10 +57,10 @@
     "triggers": "{\n  \"CustomMessage\": [\n    \"verification-link\"\n  ],\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
     "hostedUI": false,
     "userPoolGroupList": [
-        "admin"
+        "Admin"
     ],
     "serviceName": "Cognito",
-    "verificationBucketName": "zecatalogauthverificationbucket",
+    "verificationBucketName": "zecatalogauthresourcesverificationbucket",
     "parentStack": {
         "Ref": "AWS::StackId"
     },
@@ -68,7 +70,7 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "zecatalogauthCustomMessage",
+            "resourceName": "zecatalogauthresourcesCustomMessage",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",
@@ -77,7 +79,7 @@
         },
         {
             "category": "function",
-            "resourceName": "zecatalogauthPostConfirmation",
+            "resourceName": "zecatalogauthresourcesPostConfirmation",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",

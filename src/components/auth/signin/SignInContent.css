@@ -1,0 +1,23 @@
+.forgot-pass{
+	cursor: pointer;
+	background-color: white;
+	color: var(--ion-color-secondary);
+	font-size: 14px;
+	letter-spacing: 1px;
+	-webkit-text-decoration-line: underline;
+	text-decoration-line: underline; 
+	margin: 0px;
+	padding: 0px;
+}
+
+.input-fields{
+    border:1px solid grey;border-radius:5px;
+}
+
+.signInForm .inputLabel ion-label {
+	--color: var(--ion-color-medium);
+}
+
+.signInForm .inputLabelError ion-label {
+	--color: var(--ion-color-danger);
+}

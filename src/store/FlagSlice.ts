@@ -1,32 +1,33 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FlagState {
-  isAuthed: boolean;
   adminsPage: boolean;
   wasCreated: boolean;
   wasDeleted: boolean;
   wasUpdated: boolean;
   loading: boolean;
-  error: string;
+  error: boolean;
+  errorMessage: string;
+  codeSended: boolean;
+  passwordChanged: boolean;
 }
 
 const initialState: FlagState = {
-  isAuthed: false,
   adminsPage: false,
   wasCreated: false,
   wasDeleted: false,
   wasUpdated: false,
   loading: false,
-  error: "",
+  error: false,
+  errorMessage: "",
+  codeSended: false,
+  passwordChanged: false,
 };
 
 const flag = createSlice({
   name: "flag",
   initialState,
   reducers: {
-    setIsAuthed(state, { payload }: PayloadAction<boolean>) {
-      state.isAuthed = payload;
-    },
     setIsAdminsPage(state, { payload }: PayloadAction<boolean>) {
       state.adminsPage = payload;
     },
@@ -42,43 +43,31 @@ const flag = createSlice({
     setLoading(state, { payload }: PayloadAction<boolean>) {
       state.loading = payload;
     },
-    setError(state, { payload }: PayloadAction<string>) {
-      state.loading = false;
-      switch (payload) {
-        case "UserNotFoundException":
-          state.error = "User Not Found";
-          break;
-        case "InvalidParameterException":
-          state.error = "Invalid form value";
-          break;
-        case "UserNotConfirmedException":
-          state.error = "User Not Confirmed, please check your email";
-          break;
-        case "NotAuthorizedException":
-          state.error = "You have entered an invalid username or password";
-          break;
-        case "UsernameExistsException":
-          state.error = "User already exists";
-          break;
-        case "NetworkError":
-          state.error = "Network Error";
-          break;
-        default:
-          console.log("Unexpected Error: ", payload);
-          break;
-      }
+    setError(state, { payload }: PayloadAction<boolean>) {
+      state.error = payload;
+    },
+    setErrorMessage(state, { payload }: PayloadAction<string>) {
+      state.errorMessage = payload;
+    },
+    setCodeSended(state, { payload }: PayloadAction<boolean>) {
+      state.codeSended = payload;
+    },
+    setPasswordChanged(state, { payload }: PayloadAction<boolean>) {
+      state.passwordChanged = payload;
     },
   },
 });
 
 export const {
-  setIsAuthed,
   setIsAdminsPage,
   setWasCreated,
   setWasDeleted,
   setWasUpdated,
   setLoading,
   setError,
+  setErrorMessage,
+  setCodeSended,
+  setPasswordChanged,
 } = flag.actions;
 
 export default flag.reducer;

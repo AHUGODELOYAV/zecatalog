@@ -1,13 +1,13 @@
 import React from "react";
 import { IonToolbar, IonTitle, IonButtons } from "@ionic/react";
 import { useSelector } from "react-redux";
-import { flagSelector } from "../../../store/FlagSlice";
 import SignOutButton from "../buttons/SignOutButton";
 import SignInButton from "../buttons/SignInButton";
 import AdminsButton from "../buttons/AdminsButton";
+import { authSelector } from "../../../store/AuthSlice";
 
 const Toolbar: React.FC = () => {
-  const { isAuthed } = useSelector(flagSelector);
+  const { isAuthed } = useSelector(authSelector);
   return (
     <React.Fragment>
       <IonToolbar mode="ios" color="dark">

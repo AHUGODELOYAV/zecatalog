@@ -1,45 +1,38 @@
-import {
-  IonButton,
-  IonCard,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  useIonPopover,
-} from "@ionic/react";
-import {
-  ellipsisHorizontal,
-  ellipsisVertical,
-  personCircleOutline,
-} from "ionicons/icons";
+import { IonCard, IonIcon, IonItem, IonLabel, IonToggle } from "@ionic/react";
+import { personCircleOutline } from "ionicons/icons";
 import React from "react";
-import AdminsMenu from "./AdminsMenu";
+import { useDispatch } from "react-redux";
+import { AdminObject, disableAdmin, enableAdmin } from "../../store/AdminSlice";
 
-const AdminsCard: React.FC = () => {
-  const [present, dismiss] = useIonPopover(AdminsMenu, {
-    onHide: () => dismiss(),
-  });
+const AdminsCard: React.FC<{
+  admin: AdminObject;
+}> = (props) => {
+  const dispatch = useDispatch();
+  const enableDisableAdmin = () => {
+    if (props.admin.enabled) {
+      dispatch(disableAdmin({ userID: props.admin.userID }));
+    } else {
+      dispatch(enableAdmin({ userID: props.admin.userID }));
+    }
+  };
   return (
-    <IonCard>
+    <IonCard key={props.admin.userID.toString()}>
       <IonItem>
         <IonIcon icon={personCircleOutline} slot="start" />
         <IonLabel>
-          Hugo Deloya{" "}
-          <br/>
+          {props.admin.name + " " + props.admin.family_name}
+          <br />
           <small>
-            <i>alberto.deloya@gmail.com</i>
+            <i>{props.admin.email}</i>
           </small>{" "}
         </IonLabel>
-        <IonButton
-          fill="clear"
-          slot="end"
-          onClick={(e) =>
-            present({
-              event: e.nativeEvent,
-            })
-          }
-        >
-          <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical} />
-        </IonButton>
+        <IonItem>
+          <IonToggle
+            color="secondary"
+            checked={props.admin.enabled}
+            onIonChange={() => enableDisableAdmin()}
+          />
+        </IonItem>
       </IonItem>
     </IonCard>
   );

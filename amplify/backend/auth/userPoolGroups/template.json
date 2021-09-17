@@ -1,23 +1,23 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "authzecatalogauthUserPoolId": {
+        "authzecatalogauthresourcesUserPoolId": {
             "Type": "String",
-            "Default": "authzecatalogauthUserPoolId"
+            "Default": "authzecatalogauthresourcesUserPoolId"
         },
         
-        "authzecatalogauthIdentityPoolId": {
+        "authzecatalogauthresourcesIdentityPoolId": {
             "Type": "String",
-            "Default": "authzecatalogauthIdentityPoolId"
+            "Default": "authzecatalogauthresourcesIdentityPoolId"
         },
         
-        "authzecatalogauthAppClientID": {
+        "authzecatalogauthresourcesAppClientID": {
             "Type": "String",
-            "Default": "authzecatalogauthAppClientID"
+            "Default": "authzecatalogauthresourcesAppClientID"
         },
-        "authzecatalogauthAppClientIDWeb": {
+        "authzecatalogauthresourcesAppClientIDWeb": {
             "Type": "String",
-            "Default": "authzecatalogauthAppClientIDWeb"
+            "Default": "authzecatalogauthresourcesAppClientIDWeb"
         },
         "AuthRoleArn": {
             "Type": "String"
@@ -41,26 +41,26 @@
     },
     "Resources": {
     
-        "adminGroup": {
+        "AdminGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "admin",
+              "GroupName" : "Admin",
               "Precedence" : 1,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "adminGroupRole",
+                    "AdminGroupRole",
                     "Arn"
                 ]
               },
               
               "UserPoolId" : {
-                "Ref": "authzecatalogauthUserPoolId"
+                "Ref": "authzecatalogauthresourcesUserPoolId"
               } 
             }
         },
         
-        "adminGroupRole": {
+        "AdminGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -68,9 +68,9 @@
                         "",
                         [
                           {
-                            "Ref": "authzecatalogauthUserPoolId"
+                            "Ref": "authzecatalogauthresourcesUserPoolId"
                           },
-                          "-adminGroupRole"
+                          "-AdminGroupRole"
                         ]
                     ]
                 },
@@ -85,7 +85,7 @@
                             },
                             "Action": "sts:AssumeRoleWithWebIdentity",
                             "Condition": {
-                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authzecatalogauthIdentityPoolId"}},
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"authzecatalogauthresourcesIdentityPoolId"}},
                               "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
                             }
                         }
@@ -111,7 +111,7 @@
                                 "",
                                 [
                                   
-                                  "zecatalogauth",
+                                  "zecatalogauthresources",
                                   "-ExecutionRole-",
                                   {
                                     "Ref": "env"
@@ -270,16 +270,16 @@
                     "Ref": "UnauthRoleArn"
                 },
                 "identityPoolId": {
-                    "Ref": "authzecatalogauthIdentityPoolId"
+                    "Ref": "authzecatalogauthresourcesIdentityPoolId"
                 },
                 "userPoolId": {
-                    "Ref": "authzecatalogauthUserPoolId"
+                    "Ref": "authzecatalogauthresourcesUserPoolId"
                 },
                 "appClientIDWeb": {
-                    "Ref": "authzecatalogauthAppClientIDWeb"
+                    "Ref": "authzecatalogauthresourcesAppClientIDWeb"
                 },
                 "appClientID": {
-                    "Ref": "authzecatalogauthAppClientID"
+                    "Ref": "authzecatalogauthresourcesAppClientID"
                 },
                 "region": {
                     "Ref": "AWS::Region"
@@ -295,10 +295,10 @@
     
     "Outputs": {
       
-        "adminGroupRole": {
+        "AdminGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "adminGroupRole",
+                    "AdminGroupRole",
                     "Arn"
                 ]
             }

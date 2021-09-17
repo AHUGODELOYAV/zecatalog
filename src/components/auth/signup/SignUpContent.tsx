@@ -1,218 +1,142 @@
 import {
-  IonButton,
   IonCol,
   IonContent,
   IonGrid,
   IonHeader,
   IonPage,
-  IonRouterLink,
   IonRow,
-  IonText,
 } from "@ionic/react";
 import React, { useState } from "react";
-import Field, { TextFieldTypes } from "../../global/field/Field";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpAuth } from "../../../store/AuthSlice";
+import { flagSelector } from "../../../store/FlagSlice";
+import {
+  fieldValidations,
+  fieldValidationsCompare,
+} from "../../../validations/FieldValidations";
+import ErrorAlert from "../../alerts/ErrorAlert";
+import SignUpAlert from "../../alerts/SignUpAlert";
+import { TextFieldTypes } from "../../global/field/Field";
+import FormTitle from "../../global/general/FormTitle";
+import Loading from "../../global/general/Loading";
+import Toast from "../../global/general/Toast";
 import Toolbar from "../../global/general/Toolbar";
+import SignUpForm from "./SignUpForm";
 
 const SignUpContent: React.FC = () => {
+  const { loading } = useSelector(flagSelector);
+  const [toastMessage, setToastMessage] = useState("");
+  const dispatch = useDispatch();
+
   const fieldName = {
-    label: "Nombre(s)",
-    type: "text" as TextFieldTypes, //"text" | "password" | "email" | "number" | "search" | "tel" | "url"
+    label: "Name",
+    type: "text" as TextFieldTypes,
     value: useState(""),
-    placeholder: "Ej: Luis Alejandro",
+    placeholder: "Adam",
     error: useState(false),
     errorMessage: useState(""),
     isRequired: true,
-    validationType: "text", //"email" | "password" | "text" | "tel"
+    validationType: "text",
   };
 
   const fieldLastName = {
-    label: "Apellido(s)",
-    type: "text" as TextFieldTypes, //"text" | "password" | "email" | "number" | "search" | "tel" | "url"
+    label: "Last Name",
+    type: "text" as TextFieldTypes,
     value: useState(""),
-    placeholder: "Ej: Mendoza Guevara",
+    placeholder: "Smith",
     error: useState(false),
     errorMessage: useState(""),
     isRequired: true,
-    validationType: "text", //"email" | "password" | "text" | "tel"
-  };
-
-  const fieldPhone = {
-    label: "Teléfono celular (Clave de país + 10 dígitos)",
-    type: "number" as TextFieldTypes, //"text" | "password" | "email" | "number" | "search" | "tel" | "url"
-    value: useState(""),
-    placeholder: "Ej: 522225636193",
-    error: useState(false),
-    errorMessage: useState(""),
-    isRequired: true,
-    validationType: "phone", //"email" | "password" | "text" | "tel"
+    validationType: "text",
   };
 
   const fieldEmail = {
-    label: "Correo electrónico",
-    type: "email" as TextFieldTypes, //"text" | "password" | "email" | "number" | "search" | "tel" | "url"
+    label: "Email",
+    type: "email" as TextFieldTypes,
     value: useState(""),
-    placeholder: "Ej: nombre@mail.com",
+    placeholder: "myname@mail.com",
     error: useState(false),
     errorMessage: useState(""),
     isRequired: true,
-    validationType: "email", //"email" | "password" | "text" | "tel"
+    validationType: "email",
   };
 
   const fieldPass = {
-    label: "Contraseña",
-    type: "password" as TextFieldTypes, //"text" | "password" | "email" | "number" | "search" | "tel" | "url"
+    label: "Password",
+    type: "password" as TextFieldTypes,
     value: useState(""),
     placeholder: "",
     error: useState(false),
     errorMessage: useState(""),
     isRequired: true,
-    validationType: "text", //"email" | "password" | "text" | "tel"
+    validationType: "password",
   };
 
   const fieldPassConfirm = {
-    label: "Confirmar contraseña",
-    type: "password" as TextFieldTypes, //"text" | "password" | "email" | "number" | "search" | "tel" | "url"
+    label: "Confirm Password",
+    type: "password" as TextFieldTypes,
     value: useState(""),
     placeholder: "",
     error: useState(false),
     errorMessage: useState(""),
     isRequired: true,
-    validationType: "password", //"email" | "password" | "text" | "tel"
+    validationType: "password",
   };
 
-  const formHandler = () => {
-    // const fieldValidation = [
-    //   fieldValidations(fieldName),
-    //   fieldValidations(fieldLastName),
-    //   fieldValidations(fieldPhone),
-    //   fieldValidations(fieldEmail),
-
-    //   fieldValidationsCompare(
-    //     fieldPass,
-    //     fieldPassConfirm,
-    //     "Las contraseñas no coinciden"
-    //   ),
-    //   fieldValidations(fieldPass),
-    //   fieldValidations(fieldPassConfirm),
-    // ];
-    // if (fieldValidation.includes(true)) {
-    //   setToastMessage("Hubo algún error en el formulario");
-    //   setShowToast(true);
-    // } else {
-
-
-    //   const profileInfo = {
-    //     name: fieldName.value[0].toString(),
-    //     lastName: fieldLastName.value[0].toString(),
-    //     phoneNumber: fieldPhone.value[0].toString(),
-    //     email: fieldEmail.value[0].toString(),
-    //     role: "Cliente",
-    //     avatar: "avatar",
-    //     status: "ACTIVO",
-    //     termsandconditions: true,
-    //   };
-
-
-    //   dispatch(
-    //     signUpAuth(
-    //       {
-    //         username: fieldEmail.value[0].toString(),
-    //         password: fieldPass.value[0].toString(),
-    //         attributes: {
-    //           email: fieldEmail.value[0].toString(),
-    //           phone_number: "+"+fieldPhone.value[0].toString(),
-    //         },
-    //       },
-    //       profileInfo
-    //     )
-    //   );
-    // }
+  const signUpHandler = () => {
+    const fieldValidation = [
+      fieldValidations(fieldName),
+      fieldValidations(fieldLastName),
+      fieldValidations(fieldEmail),
+      fieldValidations(fieldPass),
+      fieldValidations(fieldPassConfirm),
+    ];
+    if (
+      !fieldValidation.includes(true) &&
+      !fieldValidationsCompare(
+        fieldPass,
+        fieldPassConfirm,
+        "Passwords do not match"
+      )
+    ) {
+      dispatch(
+        signUpAuth({
+          username: fieldEmail.value[0].toString(),
+          password: fieldPass.value[0].toString(),
+          attributes: {
+            email: fieldEmail.value[0].toString(),
+            name: fieldName.value[0].toString(),
+            family_name: fieldLastName.value[0].toString(),
+          },
+        })
+      );
+    } else {
+      setToastMessage("Please review the highlighted fields");
+    }
   };
 
   return (
     <IonPage>
+      <Loading show={loading} />
+      <Toast toastMessage={[toastMessage, setToastMessage]} />
+      <ErrorAlert />
+      <SignUpAlert />
       <IonHeader>
         <Toolbar />
       </IonHeader>
-      <IonContent className="ion-padding" id="theContent">
+      <IonContent className="ion-padding ion-text-center">
         <IonGrid fixed>
-          <IonRow>
+          <IonRow className="ion-align-items-center">
             <IonCol>
-            <IonRow className="ion-margin-bottom">
-                      <IonCol>
-                        <Field dataField={fieldName} />
-                      </IonCol>
-                    </IonRow>
-                    <IonRow className="ion-margin-bottom">
-                      <IonCol>
-                        <Field dataField={fieldLastName} />
-                      </IonCol>
-                    </IonRow>
-                    <IonRow className="ion-margin-bottom">
-                      <IonCol>
-                        <Field dataField={fieldPhone} />
-                      </IonCol>
-                    </IonRow>
-                    <IonRow className="ion-margin-bottom">
-                      <IonCol>
-                        <Field dataField={fieldEmail} />
-                      </IonCol>
-                    </IonRow>
-                    <IonRow className="ion-margin-bottom">
-                      <IonCol>
-                        <Field dataField={fieldPass} />
-                      </IonCol>
-                    </IonRow>
-                    <IonRow className="ion-margin-bottom">
-                      <IonCol>
-                        <Field dataField={fieldPassConfirm} />
-                      </IonCol>
-                    </IonRow>
-                    <IonRow className="ion-margin-bottom">
-                      <IonCol>
-                        <IonText color="medium">
-                          Al registrarte aceptas los
-                          <IonRouterLink
-                            className="cursor-pointer"
-                            onClick={() => {
-                              //setTermsAndConditions(true);
-                            }}
-                          >
-                            {" "}
-                            <u>Términos y Condiciones</u>{" "}
-                          </IonRouterLink>
-                          y la
-                          <IonRouterLink
-                            className="cursor-pointer"
-                            onClick={() => {
-                              //setPrivacyAndPolicy(true);
-                            }}
-                          >
-                            {" "}
-                            <u>Política de Privacidad</u>{" "}
-                          </IonRouterLink>
-                        </IonText>
-                      </IonCol>
-                    </IonRow>
-                    <IonRow>
-                      <IonCol>
-                        <IonButton expand="block" onClick={formHandler}>
-                          Crear cuenta
-                        </IonButton>
-                      </IonCol>
-                    </IonRow>
-                    <IonRow>
-                      <IonCol className="ion-text-center">
-                        <IonButton
-                          mode="ios"
-                          fill="clear"
-                          color="medium"
-                          routerLink="/signin"
-                        >
-                          <div className="link-bttn">Iniciar sesión</div>
-                        </IonButton>
-                      </IonCol>
-                    </IonRow>
+              <FormTitle title="Create Admin" />
+              <SignUpForm
+                fieldName={fieldName}
+                fieldLastName={fieldLastName}
+                fieldEmail={fieldEmail}
+                fieldPass={fieldPass}
+                fieldPassConfirm={fieldPassConfirm}
+                signUpHandler={signUpHandler}
+              />
             </IonCol>
           </IonRow>
         </IonGrid>
