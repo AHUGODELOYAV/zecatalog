@@ -1,0 +1,20 @@
+{
+  "trigger": true,
+  "modules": [
+    "verification-link"
+  ],
+  "parentResource": "zecatalogauthresources",
+  "functionName": "zecatalogauthresourcesCustomMessage",
+  "resourceName": "zecatalogauthresourcesCustomMessage",
+  "parentStack": "auth",
+  "triggerEnvs": "[\n  {\n    \"key\": \"RESOURCENAME\",\n    \"value\": \"resourceName\"\n  }\n]",
+  "triggerDir": "C:\\Program Files\\nodejs\\node_modules\\@aws-amplify\\cli\\node_modules\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\CustomMessage",
+  "triggerTemplate": "CustomMessage.json.ejs",
+  "roleName": "zecatalogauthresourcesCustomMessage",
+  "skipEdit": true,
+  "REDIRECTURL": "https://master.d1g0rr7d7948ef.amplifyapp.com/signin",
+  "EMAILSUBJECT": "[ZeCatalog] - Account verification",
+  "EMAILMESSAGE": "Hello! We need to verify your email address before you can sign in to ZeCatalog. Please click on the link below to verify your email address:",
+  "RESOURCENAME": "resourceName",
+  "triggerEventPath": "CustomMessage.event.json"
+}

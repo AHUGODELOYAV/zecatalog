@@ -1,22 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom";
+import App from "./App";
+import { Provider } from "react-redux";
+import Amplify from "aws-amplify";
+import aws_exports from "./aws-exports";
+import { ThunkAction } from "redux-thunk";
+import { Action, configureStore } from "@reduxjs/toolkit";
+import flagSliceReducer from "./store/FlagSlice";
+import authSliceReducer, { AuthState } from "./store/AuthSlice";
+import productSliceReducer, { ProductState } from "./store/ProductSlice";
+import adminSliceReducer, { AdminState } from "./store/AdminSlice";
+
+Amplify.configure(aws_exports);
+
+export type AuthThunk = ThunkAction<void, AuthState, unknown, Action<string>>;
+export type AdminThunk = ThunkAction<void, AdminState, unknown, Action<string>>;
+export type ProductThunk = ThunkAction<
+  void,
+  ProductState,
+  unknown,
+  Action<string>
+>;
+
+const store = configureStore({
+  reducer: {
+    flagStore: flagSliceReducer,
+    authStore: authSliceReducer,
+    productStore: productSliceReducer,
+    adminStore: adminSliceReducer,
+  },
+});
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.unregister();
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
